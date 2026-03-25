@@ -16,7 +16,7 @@
 - 全站背景為**高山／草原意象**（預設使用 Unsplash 圖片），程式在 `components/SiteBackground.tsx`。
 - 若要改成**自攝合歡山**：將照片放到 `public/mountain-bg.jpg`，並把 `SiteBackground.tsx` 裡的 `<Image>` 改成 `src="/mountain-bg.jpg"`（可刪除遠端網址）。
 - 首頁分類卡與列表圖示為專案內 **內嵌 SVG**（`components/svg-icons.tsx`），不需額外安裝圖示套件；讀書列表會輪替不同書本圖示，財務列表輪替走勢／錢包／硬幣等圖示。
-- **版面**：主內容區約為 `max-w-screen-2xl`（約 1536px），方便中文長行閱讀；大螢幕右側為 **側欄**（`components/Sidebar.tsx`）：全部分類連結 + 全站最新 10 篇文章（依 front matter 的 `date`）。
+- **版面**：主內容區約為 `max-w-6xl`（72rem / 約 1152px），中文一行約 **45 字**；大螢幕右側為 **側欄**（`components/Sidebar.tsx`）：全部分類連結 + 全站最新 10 篇文章（依 front matter 的 `date`）。
 
 ## 本機開發
 
@@ -57,13 +57,6 @@ npm -v
 ```bash
 npm install
 npm run dev
-```
-
-瀏覽 <http://localhost:3000>。
-
-## 新增文章
-
-在對應分類資料夾新增 `檔名.md`，檔名（不含 `.md`）會成為網址，例如 `content/reading/原子習慣.md` → `/reading/原子習慣`。
 ### 如何將 docx 檔案轉成 Markdown 或直接使用 docx？
 
 目前本專案建議的做法如下：
@@ -74,13 +67,22 @@ npm run dev
 
 - [pandoc](https://pandoc.org/):  
   安裝 pandoc 後，在終端機輸入以下指令即可轉換：
-  
+
   ```bash
   pandoc input.docx -f docx -t markdown -o output.md
   ```
 
+  > **如果 docx 內有圖片，pandoc 也會自動將圖片提取出來並儲存到指定資料夾（預設是同目錄的 `media` 資料夾），Markdown 內會自動加入圖片參考路徑。**  
+  > 建議轉換時加上 `--extract-media=./media`（或指定資料夾），圖片會被一併導出，轉換後 md 內容可正常引用本機圖片。
+  >
+  > 例如：
+  > ```bash
+  > pandoc input.docx -f docx -t markdown -o output.md --extract-media=./media
+  > ```
+  > 轉換後記得把 `output.md` 及 `media` 資料夾都放到專案的 content 對應路徑下。
+
 - [docx2md 線上工具](https://docx2md.com/):  
-  直接上傳 docx，即可下載 md 檔。
+  直接上傳 docx，即可下載 md 檔（但部分圖片可能需要另外手動補圖）。
 
 #### 2. 直接讀取 docx？
 
@@ -94,6 +96,13 @@ npm run dev
 如需自動化或批量處理轉換，可研究 pandoc 串接腳本。
 
 歡迎於 Issues 討論 docx 導入需求。
+
+瀏覽 <http://localhost:3000>。
+
+## 新增文章
+
+在對應分類資料夾新增 `檔名.md`，檔名（不含 `.md`）會成為網址，例如 `content/reading/原子習慣.md` → `/reading/原子習慣`。
+
 
 開頭 **front matter** 範例：
 

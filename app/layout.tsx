@@ -32,8 +32,8 @@ export default function RootLayout({
         <div className="relative z-10 flex min-h-screen flex-col">
           <SiteHeader />
           <main className="mx-auto w-full max-w-[min(100%,118rem)] flex-1 px-4 py-10 sm:px-6">
-            <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-10">
-              <div className="min-w-0 w-full max-w-screen-2xl flex-1 rounded-3xl border border-white/40 bg-white/55 p-6 shadow-2xl shadow-stone-900/10 backdrop-blur-md sm:p-8 lg:p-10">
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-center lg:gap-10">
+              <div className="mx-auto min-w-0 w-full max-w-6xl rounded-3xl border border-white/40 bg-white/55 p-6 shadow-2xl shadow-stone-900/10 backdrop-blur-md sm:p-8 lg:mx-0 lg:p-10">
                 {children}
               </div>
               <Sidebar />
