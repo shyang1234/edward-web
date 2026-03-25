@@ -27,7 +27,7 @@
 
 請到 [Node.js 官網下載頁](https://nodejs.org/zh-tw/download) 下載安裝，選擇「LTS」版本（推薦）。安裝過程中預設都有勾選 npm，只要一路下一步即可。
 
-安裝完後，請重新開啟一個終端視窗，執行以下指令確認安裝成功：
+安裝完後，請重新開啟一個終端機視窗，執行以下指令確認安裝成功：
 
 ```powershell
 node -v
@@ -53,10 +53,17 @@ npm -v
 
 如遇問題，可參考 Node.js 官網說明或搜尋「安裝 Node.js PowerShell 路徑」來解決常見障礙。
 
-
 ```bash
 npm install
 npm run dev
+```
+
+瀏覽 <http://localhost:3000>。
+
+## 新增文章
+
+在對應分類資料夾新增 `檔名.md`，檔名（不含 `.md`）會成為網址，例如 `content/reading/原子習慣.md` → `/reading/原子習慣`。
+
 ### 如何將 docx 檔案轉成 Markdown 或直接使用 docx？
 
 目前本專案建議的做法如下：
@@ -96,13 +103,6 @@ npm run dev
 如需自動化或批量處理轉換，可研究 pandoc 串接腳本。
 
 歡迎於 Issues 討論 docx 導入需求。
-
-瀏覽 <http://localhost:3000>。
-
-## 新增文章
-
-在對應分類資料夾新增 `檔名.md`，檔名（不含 `.md`）會成為網址，例如 `content/reading/原子習慣.md` → `/reading/原子習慣`。
-
 
 開頭 **front matter** 範例：
 
