@@ -55,7 +55,7 @@ export default async function PostPage({ params }: Props) {
       </div>
 
       <div className="mt-10 rounded-2xl border border-stone-200/80 bg-white/50 p-6 sm:p-8">
-        <MarkdownBody content={post.content} />
+        <MarkdownBody content={post.content} category={cat} />
       </div>
     </article>
   );
