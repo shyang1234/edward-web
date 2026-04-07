@@ -20,7 +20,7 @@ function resolveMarkdownAssetSrc(
 
 export function MarkdownBody({ content, category }: Props) {
   return (
-    <article className="prose prose-stone prose-lg max-w-none prose-headings:font-display prose-a:text-accent prose-a:no-underline hover:prose-a:underline">
+    <article className="prose prose-stone prose-lg max-w-none prose-headings:font-display prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-li:marker:text-stone-800 [&_img:first-of-type]:!mx-auto [&_img:first-of-type]:!block [&_img:first-of-type]:!w-1/2 [&_img:first-of-type]:!max-w-[50%] [&_img:first-of-type]:!max-h-[42.5vh] [&_img:first-of-type]:!object-contain">
       <ReactMarkdown
         components={{
           img: ({ src, alt, ...rest }) => (

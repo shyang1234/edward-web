@@ -4,139 +4,87 @@ date: "2025-03-26"
 description: "How to calm your mind"
 draft: false
 ---
- 
-![How to calm your mind](./media/media/image1.jpeg)
-訂定生產力時間 （包含家事）和空閒時間
-**專注在哪裡，成就在哪裡**
-工作壓力來源
 
-- 技術不清楚的部分
+![How to calm your mind](/content/reading/media/media/image1.jpeg)
 
-  - List all topics and study those one-by-one.
+這本書裡面提到的心靈不平靜，很多的時候其實是和專注力不夠還有壓力處理有關，就我而言這兩件事我也的確做得不夠好；
 
-- 緊急項目，需要從會議或 teams 發覺
+在專注力的部分書中特別寫到**專注在哪裡，成就在哪裡**，像我的問題就是有時遇到煩悶時，就上上社群軟體看看新聞，或是看看 email 和 teams 訊息，造成專注力中斷效率不佳；看過這本書後，目前解決的辦法就是需要設定訂定生產力時間和休息時間，利用 Pomodoro timer 做 60 分鐘專注 (生產力時間) 加上 10 分鐘休息時間看 email + Teams 訊息，並且在上班時間不上社群軟體和看新聞，在使用這個方法後，工作效率大幅增加，也相對地降低了工作的壓力。
 
-  - Use Pomodoro timer (50min focus + 5min short break + 50min focus +
-    15min long break). Use break time to check emails and teams.
-
+至於在壓力的處理上，有分工作壓力和家庭壓力，其實任何壓力都有分可以控制的部分漢不能控制的部分，解決的方法就是列出壓力並把自己可以控制和做的部份去完成。
+我列出我的工作壓力來源如下
+- 技術不清楚的部分會讓我覺得很虛並擔心
+  關於這部分可以做的就是列出所有的 topics 並且安排時間一項一項找時間 study 完成。
+- 突發事件和緊急項目，需要從會議、emails、Teams 發覺，由於擔心，一有訊息和 email 就去看，這樣反而降低效率。
+  利用時間安排只有在休息時間看這些訊息。
 - 部門成員處裡及速度方法不如預期
+  需要對部門宣布並要求
+  (1) 每一個問題正常要在一個月內解決，如果遇到困難或是重要的問題，要有 closing path, next step, due day。
+  (2) 部門成員必須當作一個 bridge 去了解客戶需求並協調內部資源。to understand
+  (3) 在要求其他 team 的協助或支援需要有 schedule，如果完全 transfer 這個 ticket 給其他 team 需要讓 project leader 或是 PM 知道。
+  在我的立場我必須持續地問 team 成員三件事 closing path, next step and schedule, and customers status.
+  Team member 的績效在於 
+  (1) 貢獻度
+  (2) 專業程度
+  (3) 積極度(持續學習, 追蹤, 快速完成工作),
+  (4) 協調溝通能力
+  (5) 配合度
 
-  - Need to announce that (1) One ticket needs to be solved in one month
-    normally. In case of critical or difficult one, need to have a
-    closing path at least. (2) AE needs to act as a bridge to understand
-    the customer\'s requirement and coordinate the internal resources
-    accordingly. (3) Requesting other team\'s help needs to have a
-    schedule. Or totally transfer this ticket to other team and the
-    project leader(or PM) should be aware of this.
-
-  - Need to ask the team member about the closing path, customer\'s
-    status, other teams\' schedule, etc.
-
-    - 貢獻度, 專業程度, 積極度(持續學習, 追蹤, 快速完成工作),
-      協調溝通能力, 配合度
-
-> 家庭壓力來源
-
-- 苓苓花在社群媒體太多時間.
-
-  - Need to let her know the body index.
-
-    - Treat your body as a machine.
-
-    - Plan ahead and spend your time/energy in the right place.
-
+關於家庭壓力來源還有我自己可以做的是如下
+- 女兒花在社群媒體太多時間.
+  和她建立固定的 1-on-1 時間，讓她了解身體能量指數，把自己身體當作一台機器，需要有計畫並好好有效的使用自己的身體、精力、和時間。
 - 老婆花太多時間在網路和政治
+  其實除了我老婆以外，還有很多其他人(包含我的朋友) 也是這樣，那我為什麼特別針對她呢?
+  仔細想想問題在於 
+  (1) 老婆不聽我的意見，我想這應該是我最氣的部分，:) 我這麼帥怎麼可以不聽我的.... 
+  (2) 我討厭那個政黨也認為支持他們的是愚笨的，這個想想自己也是太政治化了~~~
+  仔細想想，這個壓力主要問題在我，只是我太以自我為中心。
+  斯多葛哲學告訴我們能讓自己生氣的只有自己，只有你自己能夠傷害自己，唯一能完全控制的只有自己的態度和作為。
+  我想我可以做的應該是讓她知道 (1) 我在家裡不要聽到有關任何政治的事 (2) 讓她知道我不是很喜歡一個人花在網路上時間太多，但我尊重她的時間選擇。
+- 有時我會氣家裏太亂，他們都把家裡弄亂
+  這點其實就簡單了，自己安排時間去清就好，並建立起一套家人可以簡單運作就可以保持清潔的系統；比如說入門處衣服東西亂丟，那就整理一個地方讓大家方便放東西和衣服。
 
-  - What I am worried? Actually I just hate three things. (1) She does
-    not listen to my opinions. (2) I hate that party and think anyone
-    believe that is stupid. (3) I hate CH dramas.
+另外還有自我壓力
+- 穩定被動收入來源建立 - 須建立財務系統
+- 理想退休生活模式建立 - 建立運動系統、藝文旅遊系統、不同朋友圈 (登山朋友、跑步朋友、etc)
+- 自我實現 - 建立學習系統。
+- 台灣安全穩定和發展 - 固定時間看新聞，少看 FB 偏激言論，做好應對措施。
 
-  - So it is nothing related to her, it is all about my ego and what I
-    think.
-    斯多葛哲學告訴我們能讓自己生氣的只有自己，只有你自己能夠傷害自己，唯一能完全控制的只有自己的態度和作為。
-
-  - What I need to do is to ask her (1) don\'t play any politic things
-    when I am there. (2) don't talk to me about this party. (3) leave a
-    message that I don\'t like the thing she spent so much time there.
-
-- 家裏太亂
-
-  - Do those things on my own.
-
-> 自我壓力
-
-- 穩定被動收入來源建立 -\> 須建立財務系統
-
-- 理想退休生活模式建立 -\> 建立運動系統、藝文旅遊系統、不同朋友圈
-  (登山朋友、跑步朋友、etc)
-
-- 自我實現 -\> 建立學習系統。
-
-- 台灣安全穩定和發展 -\> 固定時間看新聞，少看 FB
-  偏激言論，做好應對措施。
-
->  
->
-> 過勞三大特徵
+書中還有寫到過勞三大特徵
 
 - 筋疲力竭
-
 - 憤世忌俗
-
 - 缺乏生產力
 
-> 過勞六個面向
+其造成過勞六個面向為
 
 - 工作量
-
 - 失去控制
-
-- 報籌 (錢或成就感）讚美不夠 -\> 每星期找出可以讚美的人
-
+- 報籌 (錢或成就感）讚美不夠 - 每星期找出可以讚美的人
 - 社群連結
-
 - 公平
-
 - 價值觀
 
-> 防止過勞
-
+如果要防止過勞，就必須要
 - 有目標的行動，全心投入
-
 - 好好品味生活
-
-  - 那些時候讓你回味無窮？
-
-    - 和法國人聊天，覺得自己可以和陌生外國人聊的好，很高興
-
-    - 幫 team 成員解決問題，為自己的能力和幫忙高興
-
-    - 騎自行車去計畫中的地方，對自己的安排和執行力高興，並且有時看到意料之外的美景
-
-    - 在杉林溪看到大瀑布，還有漂亮的河邊
+  - 想想那些時候讓你回味無窮？我想了一下列出下面幾件事
+    - 和法國人聊天，覺得自己可以和陌生外國人聊的好，很高興；這個說明了當我勇敢踏出去和不同人事物接觸，會有意外的驚喜。
+    - 幫 team 成員解決問題，為自己的能力和幫忙高興；這個也顯示我需要多去深入理解成員問題，不僅讓我掌握度增加，也可以幫到人。
+    - 騎自行車去計畫中的地方，對自己的安排和執行力高興，並且有時看到意料之外的美景；一樣，多去接觸不同的地方和體驗。
+    - 在杉林溪看到大瀑布，還有漂亮的河邊；我喜歡大自然!!!
 
   - 三個體驗
-
     - 盡情享受
-
     - 讚歎
-
     - 感激
 
-> 平靜
-
+此外這本書也提到平靜的方法
 - 咖啡因，少喝咖啡，平常用綠茶取代
-
-- 冥想
-
-- 運動
-
-- 朋友
-
-- 飲食 -\> 16/8 的實踐。
-
+- 冥想 --> 有時精神狀況不好，冥想可以讓精神休息回復元氣。
+- 運動 --> 可以轉移工作煩悶情緒。
+- 朋友 --> 與好朋友聊聊天可以放鬆心情並增加見聞。
+- 飲食 --> 先吃蔬菜，並且一個星期某些日子做 16/8 的實踐，讓身體免除糖的昏沉。
 - 時間的運用需要有目的性
 
->  
->
->  
+

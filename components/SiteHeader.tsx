@@ -14,7 +14,7 @@ export function SiteHeader() {
             strokeWidth={2}
             aria-hidden
           />
-          個人筆記
+          木哥的書房筆記
         </Link>
         <nav className="flex gap-4 text-sm font-medium text-stone-800">
           <Link

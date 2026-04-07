@@ -24,3 +24,6 @@ yarn-error.log*
 # OS
 .DS_Store
 Thumbs.db
+
+# local visitor counter (see lib/visitor-count.ts)
+/data/visitor-count.json

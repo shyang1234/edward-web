@@ -16,7 +16,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "個人筆記",
+  title: "木哥的書房筆記",
   description: "讀書心得、給女兒的建議、成長歷程與財務追蹤",
 };
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { VisitorCounter } from "@/components/VisitorCounter";
 import { CATEGORIES, CATEGORY_SLUGS } from "@/lib/categories";
 import { getLatestPosts } from "@/lib/posts";
 
@@ -63,6 +64,8 @@ export function Sidebar() {
           </ol>
         )}
       </div>
+
+      <VisitorCounter />
     </aside>
   );
 }
