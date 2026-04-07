@@ -133,10 +133,11 @@ draft: false
 本機預設把次數寫入 `data/visitor-count.json`；**Vercel 無法持久寫入檔案**，因此上線後請改接 **Upstash Redis**（Vercel 官方整合）：
 
 1. 進入 Vercel 專案 → **Storage**（或 [Marketplace 搜尋 Redis](https://vercel.com/marketplace?category=storage&search=redis)）→ 建立 **Upstash Redis** 並**連結到同一個專案**。
-2. 連結後會自動寫入環境變數 `UPSTASH_REDIS_REST_URL`、`UPSTASH_REDIS_REST_TOKEN`（勿手動貼到程式碼）。
-3. 重新 **Deploy** 一次；側欄會透過 `app/api/visits` 使用 Redis `INCR` 累計人次。
+2. 連結後會自動寫入環境變數（名稱可能是 **`UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN`**，或舊版 **`KV_REST_API_URL` / `KV_REST_API_TOKEN`**；本專案兩種都支援）。請勿把金鑰貼進程式碼。
+3. 到 **該專案**（不是 Team 底下的 *Shared environment variables*）的 **Settings → Environment Variables** 確認上述變數在 **Production**（以及若有的話 **Preview**）皆有出現；若只有 Development，正式網址仍讀不到。
+4. 在 Vercel 介面 **Redeploy** 一次（改環境變數後一定要重新部署才會生效）。
 
-未設定上述變數時，部署環境會無法寫入計數（本機開發不受影響）。
+未設定 Redis 變數時，部署環境會無法寫入計數（本機開發不受影響）。
 
 ## 專案結構（精簡）
 

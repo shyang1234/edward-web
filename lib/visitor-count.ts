@@ -7,11 +7,18 @@ const REDIS_KEY = "visitor-count";
 
 type Store = { count: number };
 
+/** 與 Redis.fromEnv() 相同：支援 Upstash 與舊版 Vercel KV 變數名稱 */
+function getUpstashEnv(): { url: string | undefined; token: string | undefined } {
+  const url =
+    process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
+  const token =
+    process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
+  return { url, token };
+}
+
 function useUpstash(): boolean {
-  return Boolean(
-    process.env.UPSTASH_REDIS_REST_URL &&
-      process.env.UPSTASH_REDIS_REST_TOKEN,
-  );
+  const { url, token } = getUpstashEnv();
+  return Boolean(url && token);
 }
 
 async function readStore(): Promise<Store> {

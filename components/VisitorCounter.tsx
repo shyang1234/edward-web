@@ -38,8 +38,17 @@ export function VisitorCounter() {
       </h2>
       <p className="mt-3 font-display text-3xl font-semibold tabular-nums text-stone-900">
         {error ? (
-          <span className="text-base font-normal text-stone-500">
-            無法載入（Vercel 請依 README 連結 Upstash Redis）
+          <span className="text-base font-normal text-stone-700">
+            無法載入。請在 Vercel → Settings → Environment Variables 確認已連結
+            Redis，且 Production 有
+            <code className="mx-0.5 rounded bg-stone-200/80 px-1 text-stone-900">
+              UPSTASH_REDIS_REST_*
+            </code>
+            或
+            <code className="mx-0.5 rounded bg-stone-200/80 px-1 text-stone-900">
+              KV_REST_API_*
+            </code>
+            後再 Redeploy。
           </span>
         ) : count === null ? (
           <span className="text-base font-normal text-stone-400">載入中…</span>
