@@ -126,7 +126,17 @@ draft: false
 
 ### 環境變數
 
-目前專案不需 API key。若未來在「財務追蹤」串接即時資料，請在 Vercel 專案 **Settings → Environment Variables** 設定，**勿**將金鑰寫進程式碼。
+若未來在「財務追蹤」串接即時資料，請在 Vercel 專案 **Settings → Environment Variables** 設定，**勿**將金鑰寫進程式碼。
+
+#### 側欄「累計拜訪人數」（Vercel 上線必做）
+
+本機預設把次數寫入 `data/visitor-count.json`；**Vercel 無法持久寫入檔案**，因此上線後請改接 **Upstash Redis**（Vercel 官方整合）：
+
+1. 進入 Vercel 專案 → **Storage**（或 [Marketplace 搜尋 Redis](https://vercel.com/marketplace?category=storage&search=redis)）→ 建立 **Upstash Redis** 並**連結到同一個專案**。
+2. 連結後會自動寫入環境變數 `UPSTASH_REDIS_REST_URL`、`UPSTASH_REDIS_REST_TOKEN`（勿手動貼到程式碼）。
+3. 重新 **Deploy** 一次；側欄會透過 `app/api/visits` 使用 Redis `INCR` 累計人次。
+
+未設定上述變數時，部署環境會無法寫入計數（本機開發不受影響）。
 
 ## 專案結構（精簡）
 
@@ -137,10 +147,12 @@ draft: false
 │   └── [category]/[slug]/   # 單篇文章
 ├── components/             # UI（SiteBackground、側欄 Sidebar、內嵌圖示等）
 ├── content/                # Markdown 文章（主要編輯區）
+├── app/api/visits/         # 累計人次 API（Vercel 用 Upstash Redis）
 ├── lib/
 │   ├── categories.ts       # 分類定義
 │   ├── categoryVisuals.ts  # 分類配色／漸層
-│   └── posts.ts            # 讀取 Markdown、`getLatestPosts`（側欄最新文章）
+│   ├── posts.ts            # 讀取 Markdown、`getLatestPosts`（側欄最新文章）
+│   └── visitor-count.ts    # 人次：本機檔案或 Upstash
 ├── package.json
 └── README.md
 ```

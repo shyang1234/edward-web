@@ -39,7 +39,7 @@ export function VisitorCounter() {
       <p className="mt-3 font-display text-3xl font-semibold tabular-nums text-stone-900">
         {error ? (
           <span className="text-base font-normal text-stone-500">
-            無法載入（若部署於唯讀環境，請改用外部統計）
+            無法載入（Vercel 請依 README 連結 Upstash Redis）
           </span>
         ) : count === null ? (
           <span className="text-base font-normal text-stone-400">載入中…</span>
