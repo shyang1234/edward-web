@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "verify:assets": "node scripts/verify-assets.cjs",
+    "prebuild": "npm run verify:assets",
     "build": "next build",
+    "verify": "npm run verify:assets && npm run build",
     "start": "next start",
     "lint": "next lint"
   },

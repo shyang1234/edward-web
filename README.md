@@ -120,8 +120,10 @@ draft: false
 
 1. 在 GitHub 建立新 repository，將此專案 push 上去。
 2. 登入 [Vercel](https://vercel.com)，**Import** 該 repository。
-3. Framework Preset 選 **Next.js**，Build Command 預設 `next build`，直接 Deploy。
+3. Framework Preset 選 **Next.js**，Build Command 維持 **`npm run build`**（會先跑 `verify:assets` 再 `next build`，與本機一致），直接 Deploy。
 4. 之後每次 push 到預設分支，Vercel 會自動重新建置。
+
+**圖片與靜態檔：** Markdown 里若寫 `![](/xxx)`，檔案必須在 **`public/xxx`**（例如 `/content/reading/media/a.png` → `public/content/reading/media/a.png`）。本機可執行 `npm run verify:assets` 單獨檢查；漏放檔案時 **`npm run build` 會失敗**，可提早發現斷圖。
 
 ### 環境變數
 

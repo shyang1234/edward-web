@@ -16,8 +16,9 @@ alwaysApply: true
 # 程式習慣
 
 - 優先沿用既有元件（`components/`）、配色（`lib/categoryVisuals.ts`）、**prose-stone** 排版。
-- 變更後執行 **`npm run build`** 確認可建置。
+- 變更後執行 **`npm run build`**（會先 **`verify:assets`**）確認可建置；Markdown 中 `/開頭` 的圖必須落在 **`public/`** 對應路徑。
 - **不要在正式版 UI** 顯示開發者向文字（例如 `content/` 路徑教學、README 連結）；說明留在 README。
+- 在修改完後，須自行測試類似在 Vercel 上的環境，避免上線後出錯
 
 # 後端與部署
 
