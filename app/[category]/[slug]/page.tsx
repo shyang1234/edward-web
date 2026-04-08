@@ -7,6 +7,16 @@ import type { CategorySlug } from "@/lib/categories";
 import { categoryCardStyle } from "@/lib/categoryVisuals";
 import { getPost } from "@/lib/posts";
 
+function formatPostDate(iso: string): string {
+  const d = new Date(`${iso}T12:00:00`);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString("zh-Hant-TW", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 type Props = { params: Promise<{ category: string; slug: string }> };
 
 export default async function PostPage({ params }: Props) {
@@ -47,7 +57,9 @@ export default async function PostPage({ params }: Props) {
           <h1 className="font-display text-3xl font-semibold text-stone-900 sm:text-4xl">
             {post.title}
           </h1>
-          <p className="mt-2 text-sm text-stone-600">{post.date}</p>
+          <p className="mt-2 text-sm text-stone-600">
+            木哥更新於 {formatPostDate(post.date)}
+          </p>
           {post.description && (
             <p className="mt-3 text-lg text-stone-800">{post.description}</p>
           )}

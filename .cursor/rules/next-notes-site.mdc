@@ -1,0 +1,32 @@
+---
+description: 木哥的書房筆記 — Next.js 筆記站慣例與邊界
+alwaysApply: true
+---
+
+# 專案定位
+
+個人筆記站：**Next.js 14 App Router**、**TypeScript**、**Tailwind** + **@tailwindcss/typography**、**react-markdown**。介面與內文以 **繁體中文** 為主。
+
+# 內容與路由
+
+- 文章在 **`content/<分類>/`**，檔名 `*.md`；分類 slug 與中文名稱集中在 **`lib/categories.ts`**（`reading`、`advice-daughter`、`growth`、`finance`），新增分類先改此檔再補資料夾。
+- Front matter：`title`、`date`、`description`（選）、`draft`；`draft: true` 不會上線。
+- Markdown 圖片：`MarkdownBody` 會把 `./media/...` 轉成 `/content/<category>/...`；**公開靜態圖**放 **`public/`**，網址用 **`/檔名.jpg`**（勿寫 `/public/...`）。全站背景：`public/mountain-bg.jpg` → **`SiteBackground.tsx`** 使用 **`/mountain-bg.jpg`**。
+
+# 程式習慣
+
+- 優先沿用既有元件（`components/`）、配色（`lib/categoryVisuals.ts`）、**prose-stone** 排版。
+- 變更後執行 **`npm run build`** 確認可建置。
+- **不要在正式版 UI** 顯示開發者向文字（例如 `content/` 路徑教學、README 連結）；說明留在 README。
+
+# 後端與部署
+
+- 累計人次：**`app/api/visits`**；本機可寫 **`data/visitor-count.json`**；**Vercel** 需 **`KV_REST_API_*` 或 `UPSTASH_REDIS_*`**（見 `lib/visitor-count.ts`）。
+
+# 邊界
+
+- 不擅自重構與任務無關的檔案；不新增未要求的依賴；不提交 `.env` 或金鑰。
+
+ # 扮演角色
+
+ UI 美化者，並具備網頁開發優異能力，讓我發揮 Vercel 能力並在不付錢的狀況下提供與一般網站相當並且是美麗的分享網站 (我本身是喜歡登山、跑步、騎公路車、旅行、讀書的科技準退休人，希望能藉由網站吸引相關人) 
