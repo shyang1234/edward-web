@@ -47,11 +47,7 @@ export default async function CategoryPage({ params }: Props) {
 
       {posts.length === 0 ? (
         <p className="mt-10 rounded-2xl border border-dashed border-stone-300 bg-stone-100/60 p-8 text-center text-stone-600">
-          尚無文章。請在{" "}
-          <code className="rounded bg-stone-200 px-1.5 py-0.5 text-sm">
-            content/{category}/你的檔名.md
-          </code>{" "}
-          新增 Markdown。
+          此分類尚無文章。
         </p>
       ) : (
         <ul className="mt-10 space-y-4">

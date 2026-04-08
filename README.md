@@ -13,8 +13,7 @@
 
 ### 外觀與背景圖
 
-- 全站背景為**高山／草原意象**（預設使用 Unsplash 圖片），程式在 `components/SiteBackground.tsx`。
-- 若要改成**自攝合歡山**：將照片放到 `public/mountain-bg.jpg`，並把 `SiteBackground.tsx` 裡的 `<Image>` 改成 `src="/mountain-bg.jpg"`（可刪除遠端網址）。
+- 全站背景圖在 `components/SiteBackground.tsx`；自攝圖放在 `public/mountain-bg.jpg`，`src` 使用 `/mountain-bg.jpg`（勿寫成 `/public/...`）。
 - 首頁分類卡與列表圖示為專案內 **內嵌 SVG**（`components/svg-icons.tsx`），不需額外安裝圖示套件；讀書列表會輪替不同書本圖示，財務列表輪替走勢／錢包／硬幣等圖示。
 - **版面**：主內容區約為 `max-w-6xl`（72rem / 約 1152px），中文一行約 **45 字**；大螢幕右側為 **側欄**（`components/Sidebar.tsx`）：全部分類連結 + 全站最新 10 篇文章（依 front matter 的 `date`）。
 

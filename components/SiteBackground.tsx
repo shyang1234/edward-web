@@ -1,12 +1,11 @@
 import Image from "next/image";
 
-const MOUNTAIN_MEADOW_SRC =
-  "https://images.unsplash.com/photo-1511884642898-4c92249e20b6?auto=format&fit=crop&w=2400&q=80";
+/** `public/mountain-bg.jpg` 在網址上為根路徑 `/mountain-bg.jpg`（勿寫成 `/public/...`） */
+const MOUNTAIN_MEADOW_SRC = "/mountain-bg.jpg";
 
 /**
- * 高山／草原意象背景（可替換為自攝合歡山：將圖放 public/mountain-bg.jpg 並改下方 src）
- */
-export function SiteBackground() {
+ * 高山／草原意象背景（自攝圖：放 `public/mountain-bg.jpg`）
+ */export function SiteBackground() {
   return (
     <div
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden"

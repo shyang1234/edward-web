@@ -15,13 +15,7 @@ export default function HomePage() {
           歡迎
         </h1>
       </div>
-      <p className="mt-3 text-stone-700">
-        依分類整理文章；在{" "}
-        <code className="rounded-lg bg-stone-200/80 px-2 py-0.5 text-sm text-stone-800">
-          content/
-        </code>{" "}
-        新增 Markdown 即可。
-      </p>
+      <p className="mt-3 text-stone-700">依分類瀏覽文章與筆記。</p>
 
       <ul className="mt-10 grid gap-5 sm:grid-cols-2">
         {CATEGORY_SLUGS.map((slug) => {

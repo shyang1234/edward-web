@@ -40,10 +40,7 @@ export default function RootLayout({
             </div>
           </main>
           <footer className="relative z-10 border-t border-white/20 bg-stone-950/30 py-8 text-center text-sm text-stone-100 backdrop-blur-sm">
-            <p>本地撰寫 · GitHub · Vercel</p>
-            <p className="mt-1 text-xs text-stone-300/90">
-              背景為高山草原意象；可改為自攝合歡山照片（見 README）
-            </p>
+            <p className="text-stone-200/95">背景為台灣合歡山高山草原</p>
           </footer>
         </div>
       </body>
