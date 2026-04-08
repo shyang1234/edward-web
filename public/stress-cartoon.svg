@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="Stress illustration">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef3c7"/>
+      <stop offset="100%" stop-color="#fde68a"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" rx="16" fill="url(#bg)"/>
+  <path d="M40 48 L52 36 L64 48 L76 36 L88 48" fill="none" stroke="#b45309" stroke-width="3" stroke-linecap="round"/>
+  <path d="M232 40 L244 28 L256 40 L268 28 L280 40" fill="none" stroke="#b45309" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="160" cy="95" r="38" fill="#fff7ed" stroke="#92400e" stroke-width="3"/>
+  <path d="M128 78 Q140 72 152 78" fill="none" stroke="#78350f" stroke-width="3" stroke-linecap="round"/>
+  <path d="M168 78 Q180 72 192 78" fill="none" stroke="#78350f" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="142" cy="92" r="5" fill="#451a03"/>
+  <circle cx="178" cy="92" r="5" fill="#451a03"/>
+  <path d="M198 72 Q204 62 200 54" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+  <path d="M118 68 Q112 58 116 50" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+  <ellipse cx="108" cy="110" rx="4" ry="8" fill="#7dd3fc" opacity="0.9"/>
+  <ellipse cx="212" cy="108" rx="4" ry="9" fill="#7dd3fc" opacity="0.9"/>
+  <path d="M145 118 Q160 128 175 118" fill="none" stroke="#78350f" stroke-width="3" stroke-linecap="round"/>
+  <path d="M95 145 Q160 165 225 145" fill="none" stroke="#92400e" stroke-width="4" stroke-linecap="round"/>
+</svg>

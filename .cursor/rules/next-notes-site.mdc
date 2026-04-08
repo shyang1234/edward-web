@@ -11,7 +11,7 @@ alwaysApply: true
 
 - 文章在 **`content/<分類>/`**，檔名 `*.md`；分類 slug 與中文名稱集中在 **`lib/categories.ts`**（`reading`、`advice-daughter`、`growth`、`finance`），新增分類先改此檔再補資料夾。
 - Front matter：`title`、`date`、`description`（選）、`draft`；`draft: true` 不會上線。
-- Markdown 圖片：`MarkdownBody` 會把 `./media/...` 轉成 `/content/<category>/...`；**公開靜態圖**放 **`public/`**，網址用 **`/檔名.jpg`**（勿寫 `/public/...`）。全站背景：`public/mountain-bg.jpg` → **`SiteBackground.tsx`** 使用 **`/mountain-bg.jpg`**。
+- Markdown 圖片：`MarkdownBody` 會把 `./media/...` 轉成 `/content/<category>/...`；**公開靜態圖**放 **`public/`**，網址用 **`/路徑`**（勿寫 `/public/...`）。短文插圖可放根目錄如 **`public/stress-cartoon.svg` → `/stress-cartoon.svg`**。全站背景：`public/mountain-bg.jpg` → **`/mountain-bg.jpg`**。
 
 # 程式習慣
 

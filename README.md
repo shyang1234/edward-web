@@ -125,6 +125,16 @@ draft: false
 
 **圖片與靜態檔：** Markdown 里若寫 `![](/xxx)`，檔案必須在 **`public/xxx`**（例如 `/content/reading/media/a.png` → `public/content/reading/media/a.png`）。本機可執行 `npm run verify:assets` 單獨檢查；漏放檔案時 **`npm run build` 會失敗**，可提早發現斷圖。
 
+### Vercel 上常見「看起來怪」但其實正常
+
+**左下角帳號頭像顏色（橘／紅圓形）**  
+那是 Vercel 在未上傳大頭照時，依帳號產生的**預設色塊**，不是錯誤。若要改成照片或固定圖示：到 [Vercel Account Settings](https://vercel.com/account)（或綁定的 GitHub 個人資料）上傳 **Profile Picture** 即可。
+
+**Build Log 裡一堆黃色 `npm warn deprecated …`（rimraf、glob、eslint@8 等）**  
+那是 **`npm install` 的棄用提醒**，多半來自 **ESLint 8** 與其底層套件；**不是建置失敗**。只要最後顯示 **Build Completed**／部署成功，即可忽略這些警告。若要從根本減少警告，需日後升級到 **Next 15+** 並改用 **ESLint 9**（扁平設定），牽涉範圍較大，可另排一次升級。
+
+**如何分辨「真的失敗」：** 紅色 **Error**、exit code 非 0、或部署狀態為 **Failed** 才需要修；僅有 **warning** 而綠燈完成，代表建置通過。
+
 ### 環境變數
 
 若未來在「財務追蹤」串接即時資料，請在 Vercel 專案 **Settings → Environment Variables** 設定，**勿**將金鑰寫進程式碼。
