@@ -45,6 +45,21 @@ export default async function CategoryPage({ params }: Props) {
         </div>
       </div>
 
+      {category === "finance" && (
+        <div className="mt-6 rounded-2xl border border-emerald-200/70 bg-white/75 p-5 shadow-sm">
+          <h2 className="text-lg font-semibold text-stone-900">互動工具</h2>
+          <p className="mt-1 text-sm text-stone-600">
+            進入經濟指標趨勢儀表板，可勾選領先、同時、落後指標並同圖比較。
+          </p>
+          <Link
+            href="/finance/indicators"
+            className="mt-4 inline-flex items-center rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800"
+          >
+            開啟經濟指標趨勢
+          </Link>
+        </div>
+      )}
+
       {posts.length === 0 ? (
         <p className="mt-10 rounded-2xl border border-dashed border-stone-300 bg-stone-100/60 p-8 text-center text-stone-600">
           此分類尚無文章。
