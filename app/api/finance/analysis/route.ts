@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const model = "gemini-2.0-flash";
+  const model = "gemini-2.5-flash";
   const prompt = [
     "你是一位繁體中文總經分析師。",
     "請根據以下 markdown 指標資料，提供：",
