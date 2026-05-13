@@ -60,6 +60,25 @@ function parseCount(value: unknown): number {
   return 0;
 }
 
+function toPostComment(value: unknown): PostComment | null {
+  if (!value || typeof value !== "object") return null;
+  const candidate = value as Partial<PostComment>;
+  if (
+    typeof candidate.id === "string" &&
+    typeof candidate.name === "string" &&
+    typeof candidate.message === "string" &&
+    typeof candidate.createdAt === "string"
+  ) {
+    return {
+      id: candidate.id,
+      name: candidate.name,
+      message: candidate.message,
+      createdAt: candidate.createdAt,
+    };
+  }
+  return null;
+}
+
 async function readFileStore(): Promise<FileStore> {
   try {
     const raw = await fs.readFile(DATA_FILE, "utf-8");
@@ -102,20 +121,18 @@ export async function getPostInteractions(postKey: string): Promise<PostInteract
     const comments: PostComment[] = [];
     if (Array.isArray(commentsRaw)) {
       for (const item of commentsRaw) {
-        if (typeof item !== "string") continue;
-        try {
-          const parsed = JSON.parse(item) as PostComment;
-          if (
-            typeof parsed.id === "string" &&
-            typeof parsed.name === "string" &&
-            typeof parsed.message === "string" &&
-            typeof parsed.createdAt === "string"
-          ) {
-            comments.push(parsed);
+        if (typeof item === "string") {
+          try {
+            const parsed = JSON.parse(item) as unknown;
+            const normalized = toPostComment(parsed);
+            if (normalized) comments.push(normalized);
+          } catch {
+            // ignore malformed comment
           }
-        } catch {
-          // ignore malformed comment
+          continue;
         }
+        const normalized = toPostComment(item);
+        if (normalized) comments.push(normalized);
       }
     }
 
