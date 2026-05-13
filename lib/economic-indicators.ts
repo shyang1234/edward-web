@@ -108,7 +108,7 @@ export const ECONOMIC_INDICATORS: IndicatorMeta[] = [
   {
     id: "real_rate_10y",
     label: "美國 10Y 實質利率（FRED DFII10）",
-    group: "lagging",
+    group: "leading",
     kind: "fred",
     volatility: "low",
     fredId: "DFII10",
