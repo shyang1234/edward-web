@@ -4,6 +4,7 @@ import path from "path";
 import { isCategorySlug } from "@/lib/categories";
 import {
   addComment,
+  deleteComment,
   getPostInteractions,
   incrementReaction,
   type ReactionKind,
@@ -26,9 +27,26 @@ type CommentBody = {
 };
 
 type RequestBody = ReactionBody | CommentBody;
+type DeleteBody = { commentId: string };
 
 function postKey(category: string, slug: string): string {
   return `${category}/${slug}`;
+}
+
+function getAdminDeleteToken(): string | undefined {
+  return process.env.POST_INTERACTIONS_ADMIN_TOKEN;
+}
+
+function isAdminAuthorized(request: NextRequest): boolean {
+  const expected = getAdminDeleteToken();
+  if (!expected) return false;
+  const viaHeader = request.headers.get("x-admin-token");
+  const auth = request.headers.get("authorization");
+  const bearer = auth?.toLowerCase().startsWith("bearer ")
+    ? auth.slice(7)
+    : null;
+  const provided = viaHeader ?? bearer ?? "";
+  return provided === expected;
 }
 
 function validateComment(name: string, message: string): string | null {
@@ -97,6 +115,49 @@ export async function POST(request: NextRequest, { params }: Params) {
     }
 
     return NextResponse.json({ error: "invalid_action" }, { status: 400 });
+  } catch {
+    return NextResponse.json(
+      { error: "storage_unavailable" },
+      { status: 503 },
+    );
+  }
+}
+
+export async function DELETE(request: NextRequest, { params }: Params) {
+  const { category, slug } = await params;
+  if (!(await ensurePostExists(category, slug))) {
+    return NextResponse.json({ error: "post_not_found" }, { status: 404 });
+  }
+
+  const expected = getAdminDeleteToken();
+  if (!expected) {
+    return NextResponse.json(
+      { error: "admin_token_not_configured" },
+      { status: 503 },
+    );
+  }
+  if (!isAdminAuthorized(request)) {
+    return NextResponse.json(
+      { error: "admin_unauthorized" },
+      { status: 401 },
+    );
+  }
+
+  let body: DeleteBody;
+  try {
+    body = (await request.json()) as DeleteBody;
+  } catch {
+    return NextResponse.json({ error: "invalid_body" }, { status: 400 });
+  }
+
+  const commentId = body.commentId?.trim();
+  if (!commentId) {
+    return NextResponse.json({ error: "comment_id_required" }, { status: 400 });
+  }
+
+  try {
+    const data = await deleteComment(postKey(category, slug), commentId);
+    return NextResponse.json(data);
   } catch {
     return NextResponse.json(
       { error: "storage_unavailable" },

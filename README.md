@@ -150,6 +150,52 @@ draft: false
 
 未設定 Redis 變數時，部署環境會無法寫入計數（本機開發不受影響）。
 
+#### 文章「按讚 / 愛心 / 留言」資料儲存（Vercel 上線必做）
+
+本專案的文章互動功能（按讚、愛心、留言）在**本機**會寫入 `data/post-interactions.json`，但在 **Vercel** 不能依賴本機檔案：
+
+- Vercel 為 serverless 執行環境，函式實例短生命週期，檔案系統非持久化。
+- 寫到本地檔案的資料，可能在下一次請求就消失，或不同實例讀不到。
+
+因此上線請使用 **Upstash Redis**（可用 Vercel Storage 整合建立）。
+
+- **Upstash Redis 是什麼？**  
+  雲端的 key-value 資料庫（Redis），適合 serverless 場景，支援持久化儲存與高併發讀寫。
+- **是否免費？**  
+  Upstash 通常提供 free tier（免費額度），個人站常見的留言與計數需求多半夠用；實際配額請以 Upstash / Vercel Storage 方案頁為準。
+- **REST token 是什麼？**  
+  呼叫 Upstash REST API 的憑證（類似 API key）。伺服器端透過它驗證身分，才能讀寫資料庫。
+
+本專案支援下列環境變數（擇一組即可）：
+
+- 新版：`UPSTASH_REDIS_REST_URL`、`UPSTASH_REDIS_REST_TOKEN`
+- 舊版：`KV_REST_API_URL`、`KV_REST_API_TOKEN`
+- 管理者刪留言 token：`POST_INTERACTIONS_ADMIN_TOKEN`（僅伺服器端使用）
+
+> 安全提醒：請只把 token 放在 Vercel 專案的 Environment Variables，**不要**寫進程式碼、不要 commit 到 Git。
+
+#### 上線後 3 步驟自我檢查（留言/按讚）
+
+每次部署完成後，可用下面 3 步快速確認互動功能是否正常寫進 Redis：
+
+1. **檢查環境變數是否在 Production 生效**  
+   到 Vercel 專案 → **Settings → Environment Variables**，確認 `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN`（或 `KV_REST_API_*`）出現在 **Production**。若剛新增或修改，記得 **Redeploy**。
+
+2. **檢查互動 API 讀取是否正常**  
+   開啟（替換成你的文章路徑）：
+   - `https://你的網域/api/posts/reading/AtomicHabbits/interactions`  
+   若正常，應回傳 JSON，至少包含：
+   - `reactions.like`
+   - `reactions.heart`
+   - `comments`（陣列）
+
+3. **前台實際操作一次**  
+   進入任一文章頁，按一次「讚」或送出一則留言，再重新整理頁面確認資料有保留。  
+   若重整後資料消失，優先檢查：
+   - Redis 連線變數是否設在錯誤環境（例如只有 Development）
+   - Vercel 是否已重新部署
+   - API 回應是否出現 `storage_unavailable`
+
 ## 專案結構（精簡）
 
 ```

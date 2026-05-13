@@ -191,3 +191,29 @@ export async function addComment(
   await writeFileStore(store);
   return current;
 }
+
+export async function deleteComment(
+  postKey: string,
+  commentId: string,
+): Promise<PostInteractionState> {
+  if (useUpstash()) {
+    const redis = Redis.fromEnv();
+    const current = await getPostInteractions(postKey);
+    const nextComments = current.comments.filter((c) => c.id !== commentId);
+    await redis.del(commentKey(postKey));
+    if (nextComments.length > 0) {
+      await redis.rpush(
+        commentKey(postKey),
+        ...nextComments.map((c) => JSON.stringify(c)),
+      );
+    }
+    return getPostInteractions(postKey);
+  }
+
+  const store = await readFileStore();
+  const current = normalizeState(store.posts[postKey]);
+  current.comments = current.comments.filter((c) => c.id !== commentId);
+  store.posts[postKey] = current;
+  await writeFileStore(store);
+  return current;
+}

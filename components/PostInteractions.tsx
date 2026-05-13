@@ -44,6 +44,8 @@ export function PostInteractions({ category, slug }: Props) {
   });
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
+  const [adminToken, setAdminToken] = useState("");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const endpoint = `/api/posts/${encodeURIComponent(category)}/${encodeURIComponent(slug)}/interactions`;
 
@@ -108,6 +110,37 @@ export function PostInteractions({ category, slug }: Props) {
       setError(err instanceof Error ? err.message : "操作失敗");
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  async function deleteByAdmin(commentId: string) {
+    setDeletingId(commentId);
+    setError(null);
+    try {
+      const response = await fetch(endpoint, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-token": adminToken.trim(),
+        },
+        body: JSON.stringify({ commentId }),
+      });
+      const json = (await response.json()) as InteractionResponse;
+      if (!response.ok || json.error) {
+        throw new Error(
+          json.error === "admin_unauthorized"
+            ? "管理權限驗證失敗，請確認 admin token。"
+            : json.error || "刪除留言失敗",
+        );
+      }
+      setData({
+        reactions: json.reactions ?? { like: 0, heart: 0 },
+        comments: json.comments ?? [],
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "刪除留言失敗");
+    } finally {
+      setDeletingId(null);
     }
   }
 
@@ -180,6 +213,23 @@ export function PostInteractions({ category, slug }: Props) {
         <p className="mt-4 rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700">{error}</p>
       )}
 
+      <div className="mt-6 rounded-xl border border-stone-200 bg-white p-4">
+        <h3 className="text-base font-semibold text-stone-900">管理模式（刪留言）</h3>
+        <p className="mt-1 text-xs text-stone-500">
+          輸入 admin token 後，留言卡片會出現刪除按鈕。
+        </p>
+        <label className="mt-2 block text-sm text-stone-700">
+          Admin Token
+          <input
+            type="password"
+            value={adminToken}
+            onChange={(e) => setAdminToken(e.target.value)}
+            placeholder="請輸入 POST_INTERACTIONS_ADMIN_TOKEN"
+            className="mt-1 block w-full rounded-lg border border-stone-300 bg-white px-3 py-2"
+          />
+        </label>
+      </div>
+
       <div className="mt-6 space-y-3">
         <h3 className="text-base font-semibold text-stone-900">
           留言列表（{data.comments.length}）
@@ -204,6 +254,16 @@ export function PostInteractions({ category, slug }: Props) {
                 <p className="mt-2 text-xs text-stone-500">
                   {formatCommentDate(comment.createdAt)}
                 </p>
+                {adminToken.trim() && (
+                  <button
+                    type="button"
+                    onClick={() => void deleteByAdmin(comment.id)}
+                    disabled={Boolean(deletingId) || submitting}
+                    className="mt-3 rounded-md border border-rose-300 bg-rose-50 px-3 py-1.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {deletingId === comment.id ? "刪除中..." : "刪除留言"}
+                  </button>
+                )}
               </article>
             ))
         )}
