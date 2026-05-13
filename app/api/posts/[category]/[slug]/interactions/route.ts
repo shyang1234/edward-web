@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
 import { isCategorySlug } from "@/lib/categories";
-import { getPost } from "@/lib/posts";
 import {
   addComment,
   getPostInteractions,
@@ -42,7 +43,8 @@ function validateComment(name: string, message: string): string | null {
 
 async function ensurePostExists(category: string, slug: string): Promise<boolean> {
   if (!isCategorySlug(category)) return false;
-  return Boolean(getPost(category, slug));
+  const filePath = path.join(process.cwd(), "content", category, `${slug}.md`);
+  return fs.existsSync(filePath);
 }
 
 export async function GET(_: NextRequest, { params }: Params) {
