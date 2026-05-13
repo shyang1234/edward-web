@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import {
   ECONOMIC_INDICATORS,
   getIndicatorsByGroup,
@@ -91,11 +92,48 @@ function formatNumber(value: number | null): string {
   });
 }
 
-function toCsvCell(value: string): string {
-  if (value.includes(",") || value.includes('"') || value.includes("\n")) {
-    return `"${value.replaceAll('"', '""')}"`;
+function buildMarkdownReport(input: {
+  title: string;
+  start: string;
+  end: string;
+  series: ApiSeries[];
+}): string {
+  const { title, start, end, series } = input;
+  const dateSet = new Set<string>();
+  for (const item of series) {
+    for (const point of item.values) dateSet.add(point.date);
   }
-  return value;
+  const dates = Array.from(dateSet).sort();
+  const latestDate = dates[dates.length - 1] ?? "";
+
+  const lines: string[] = [];
+  lines.push(`# ${title}`);
+  lines.push("");
+  lines.push(`- 區間：${start} ~ ${end}`);
+  lines.push(`- 指標數：${series.length}`);
+  lines.push(`- 最新資料月份：${latestDate || "N/A"}`);
+  lines.push("");
+  lines.push("## 最新值摘要");
+  lines.push("");
+  lines.push("| 指標 | 最新值 |");
+  lines.push("|---|---:|");
+  for (const item of series) {
+    const latest = item.values.findLast((point) => point.value !== null)?.value ?? null;
+    lines.push(`| ${item.label} | ${formatNumber(latest)} |`);
+  }
+  lines.push("");
+  lines.push("## 原始序列");
+  lines.push("");
+  lines.push(`| date | ${series.map((item) => item.label).join(" | ")} |`);
+  lines.push(`|---|${series.map(() => "---:").join("|")}|`);
+
+  const bySeries = series.map((item) => new Map(item.values.map((point) => [point.date, point.value])));
+  for (const date of dates) {
+    const values = bySeries.map((map) => formatNumber(map.get(date) ?? null));
+    lines.push(`| ${date} | ${values.join(" | ")} |`);
+  }
+  lines.push("");
+  return lines.join("\n");
 }
 
 export function EconomicIndicatorDashboard() {
@@ -109,6 +147,8 @@ export function EconomicIndicatorDashboard() {
   const [warnings, setWarnings] = useState<string[]>([]);
   const [series, setSeries] = useState<ApiSeries[]>([]);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const [analysisLoading, setAnalysisLoading] = useState(false);
+  const [analysisText, setAnalysisText] = useState<string>("");
 
   const grouped = useMemo(
     () => ({
@@ -253,43 +293,69 @@ export function EconomicIndicatorDashboard() {
     void loadData(ids);
   }
 
-  function exportCsv() {
-    if (series.length === 0) {
-      setError("目前沒有可匯出的資料，請先載入趨勢圖。");
-      return;
-    }
-
-    const dateSet = new Set<string>();
-    for (const item of series) {
-      for (const point of item.values) dateSet.add(point.date);
-    }
-    const dates = Array.from(dateSet).sort();
-
-    const maps = series.map((item) => ({
-      label: item.label,
-      byDate: new Map(item.values.map((point) => [point.date, point.value])),
-    }));
-
-    const rows: string[] = [];
-    rows.push(["date", ...maps.map((item) => toCsvCell(item.label))].join(","));
-    for (const date of dates) {
-      const values = maps.map((item) => {
-        const value = item.byDate.get(date);
-        return value === null || value === undefined ? "" : String(value);
-      });
-      rows.push([date, ...values].join(","));
-    }
-
-    const csv = `\uFEFF${rows.join("\n")}`;
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  function downloadMarkdown(markdown: string, filename: string) {
+    const blob = new Blob([`\uFEFF${markdown}`], {
+      type: "text/markdown;charset=utf-8;",
+    });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = `economic-indicators-${start}-to-${end}.csv`;
+    anchor.download = filename;
     document.body.appendChild(anchor);
     anchor.click();
     anchor.remove();
     URL.revokeObjectURL(url);
+  }
+
+  function exportMarkdown() {
+    if (series.length === 0) {
+      setError("目前沒有可匯出的資料，請先載入趨勢圖。");
+      return;
+    }
+    const markdown = buildMarkdownReport({
+      title: "經濟指標趨勢報告",
+      start,
+      end,
+      series,
+    });
+    downloadMarkdown(markdown, `economic-indicators-${start}-to-${end}.md`);
+  }
+
+  async function analyzeWithGoogleAi() {
+    if (series.length === 0) {
+      setError("請先載入指標資料，再送 Google AI 分析。");
+      return;
+    }
+    setError(null);
+    setAnalysisLoading(true);
+    try {
+      const markdown = buildMarkdownReport({
+        title: "經濟指標趨勢報告（AI 分析版）",
+        start,
+        end,
+        series,
+      });
+      downloadMarkdown(markdown, `economic-indicators-ai-${start}-to-${end}.md`);
+      const response = await fetch("/api/finance/analysis", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ markdown }),
+      });
+      const payload = (await response.json()) as
+        | { analysis: string; model: string }
+        | { error: string; detail?: string };
+      if (!response.ok || !("analysis" in payload)) {
+        throw new Error(
+          "error" in payload ? payload.error : "Google AI 分析失敗，請稍後再試。",
+        );
+      }
+      setAnalysisText(payload.analysis);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Google AI 分析失敗";
+      setError(message);
+    } finally {
+      setAnalysisLoading(false);
+    }
   }
 
   const hoverData = useMemo(() => {
@@ -335,7 +401,7 @@ export function EconomicIndicatorDashboard() {
         ))}
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-5">
         <label className="text-sm text-stone-700">
           起始日期
           <input
@@ -364,11 +430,19 @@ export function EconomicIndicatorDashboard() {
         </button>
         <button
           type="button"
-          onClick={exportCsv}
+          onClick={exportMarkdown}
           disabled={series.length === 0}
           className="mt-6 rounded-lg bg-stone-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:bg-stone-400"
         >
-          匯出 CSV
+          匯出 Markdown
+        </button>
+        <button
+          type="button"
+          onClick={() => void analyzeWithGoogleAi()}
+          disabled={series.length === 0 || analysisLoading}
+          className="mt-6 rounded-lg bg-indigo-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-800 disabled:cursor-not-allowed disabled:bg-stone-400"
+        >
+          {analysisLoading ? "Google AI 分析中..." : "送 Google AI 分析"}
         </button>
       </div>
 
@@ -517,6 +591,15 @@ export function EconomicIndicatorDashboard() {
                 <span className="text-stone-500">({item.axis === "left" ? "左軸" : "右軸"})</span>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {analysisText && (
+        <div className="rounded-xl border border-indigo-200 bg-indigo-50/60 p-4 sm:p-5">
+          <h3 className="text-lg font-semibold text-indigo-900">Google AI 分析結果</h3>
+          <div className="prose prose-stone mt-3 max-w-none prose-p:my-2 prose-li:my-1">
+            <ReactMarkdown>{analysisText}</ReactMarkdown>
           </div>
         </div>
       )}
