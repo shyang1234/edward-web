@@ -343,10 +343,26 @@ export function EconomicIndicatorDashboard() {
       });
       const payload = (await response.json()) as
         | { analysis: string; model: string }
-        | { error: string; detail?: string };
+        | {
+            error: string;
+            code?: number;
+            status?: string;
+            message?: string;
+            tips?: string[];
+            detail?: string;
+          };
       if (!response.ok || !("analysis" in payload)) {
+        if ("error" in payload) {
+          const extras: string[] = [];
+          if (payload.code) extras.push(`code=${payload.code}`);
+          if (payload.status) extras.push(`status=${payload.status}`);
+          if (payload.message) extras.push(`訊息：${payload.message}`);
+          if (payload.tips?.length) extras.push(`建議：${payload.tips.join("；")}`);
+          const extraText = extras.length ? ` (${extras.join(" | ")})` : "";
+          throw new Error(`${payload.error}${extraText}`);
+        }
         throw new Error(
-          "error" in payload ? payload.error : "Google AI 分析失敗，請稍後再試。",
+          "Google AI 分析失敗，請稍後再試。",
         );
       }
       setAnalysisText(payload.analysis);

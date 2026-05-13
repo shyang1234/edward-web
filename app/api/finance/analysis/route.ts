@@ -4,6 +4,14 @@ type RequestBody = {
   markdown?: string;
 };
 
+type GeminiErrorPayload = {
+  error?: {
+    code?: number;
+    status?: string;
+    message?: string;
+  };
+};
+
 type GeminiCandidate = {
   content?: {
     parts?: Array<{
@@ -14,6 +22,24 @@ type GeminiCandidate = {
 
 function getGeminiApiKey(): string | undefined {
   return process.env.GOOGLE_AI_API_KEY ?? process.env.GEMINI_API_KEY;
+}
+
+function buildTroubleshootingTips(status?: string, code?: number): string[] {
+  const tips: string[] = [];
+  if (status === "UNAUTHENTICATED" || code === 401) {
+    tips.push("API Key 無效、過期，或未正確設定到執行環境。");
+    tips.push("請確認有設定 GOOGLE_AI_API_KEY（或 GEMINI_API_KEY）並重啟服務。");
+  } else if (status === "PERMISSION_DENIED" || code === 403) {
+    tips.push("目前金鑰或專案對 Gemini API 沒有權限。");
+    tips.push("請檢查 Google AI Studio 專案與 API 啟用狀態。");
+  } else if (status === "RESOURCE_EXHAUSTED" || code === 429) {
+    tips.push("已超過速率限制或配額限制，請稍後再試。");
+  } else if (status === "NOT_FOUND" || code === 404) {
+    tips.push("模型名稱不存在或目前區域不可用。");
+  } else {
+    tips.push("請確認 API Key、網路連線、與模型可用性。");
+  }
+  return tips;
 }
 
 export async function POST(request: NextRequest) {
@@ -65,9 +91,31 @@ export async function POST(request: NextRequest) {
   );
 
   if (!response.ok) {
-    const detail = await response.text();
+    let detailText = "";
+    let status: string | undefined;
+    let code: number | undefined;
+    let message: string | undefined;
+    try {
+      const detailJson = (await response.json()) as GeminiErrorPayload;
+      detailText = JSON.stringify(detailJson);
+      status = detailJson.error?.status;
+      code = detailJson.error?.code ?? response.status;
+      message = detailJson.error?.message;
+    } catch {
+      detailText = await response.text();
+      code = response.status;
+    }
+
+    const tips = buildTroubleshootingTips(status, code);
     return NextResponse.json(
-      { error: "Google AI 分析失敗", detail },
+      {
+        error: "Google AI 分析失敗",
+        status,
+        code,
+        message: message ?? "未取得詳細錯誤訊息",
+        tips,
+        detail: detailText,
+      },
       { status: 502 },
     );
   }
@@ -83,7 +131,13 @@ export async function POST(request: NextRequest) {
 
   if (!text) {
     return NextResponse.json(
-      { error: "Google AI 未回傳可用分析文字" },
+      {
+        error: "Google AI 未回傳可用分析文字",
+        tips: [
+          "模型回應可能被安全規則過濾，或回傳內容為空。",
+          "請稍後重試，或縮短輸入內容後再試一次。",
+        ],
+      },
       { status: 502 },
     );
   }
