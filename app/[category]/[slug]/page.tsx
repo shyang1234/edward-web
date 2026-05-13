@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MarkdownBody } from "@/components/MarkdownBody";
+import { PostInteractions } from "@/components/PostInteractions";
 import { CategoryHomeIcon } from "@/components/CategoryHomeIcon";
 import { CATEGORIES, isCategorySlug } from "@/lib/categories";
 import type { CategorySlug } from "@/lib/categories";
@@ -69,6 +70,8 @@ export default async function PostPage({ params }: Props) {
       <div className="mt-10 rounded-2xl border border-stone-200/80 bg-white/50 p-6 sm:p-8">
         <MarkdownBody content={post.content} category={cat} />
       </div>
+
+      <PostInteractions category={category} slug={slug} />
     </article>
   );
 }

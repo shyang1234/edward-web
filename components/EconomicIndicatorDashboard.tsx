@@ -335,7 +335,6 @@ export function EconomicIndicatorDashboard() {
         end,
         series,
       });
-      downloadMarkdown(markdown, `economic-indicators-ai-${start}-to-${end}.md`);
       const response = await fetch("/api/finance/analysis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
